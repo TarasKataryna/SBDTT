@@ -1,0 +1,29 @@
+﻿<Window x:Class="Task2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task2"
+        mc:Ignorable="d"
+        Background="LightGray"
+        ResizeMode="NoResize"
+        Title="Shapes Drawing" Height="400" Width="620">
+    <Grid>
+        <Menu HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="617">
+            <MenuItem Header="File" VerticalAlignment="Top">
+                <MenuItem HorizontalAlignment="Left" Click="MenuItem_Click" Command="New"/>
+                <MenuItem HorizontalAlignment="Left" Click="MenuItem_Click_1" Command="Open"/>
+                <MenuItem HorizontalAlignment="Left" Click="MenuItem_Click_2" Command="Save"/>
+                <MenuItem HorizontalAlignment="Left" Click="MenuItem_Click_3" Command="SaveAs"/>
+                <MenuItem HorizontalAlignment="Left" Command="Close" Click="closeClick"/>
+            </MenuItem>
+            <MenuItem Header="Shapes" VerticalAlignment="Top">
+
+            </MenuItem>
+            <MenuItem Header="Color" VerticalAlignment="Top" Click="colorClick"/>
+            <MenuItem Header="Polygon"/>
+
+        </Menu>
+        <Canvas Name="shapeCanvas" Height="330" Background="White" Width="590" MouseDown="Canvas_MouseDown" Margin="10,31,14,10"/>
+    </Grid>
+</Window>
