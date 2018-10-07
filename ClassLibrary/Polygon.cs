@@ -5,9 +5,10 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 
+
 namespace ClassLibrary
 {
-    public class Polygon : INotifyPropertyChanged
+    public class PolygonShape : INotifyPropertyChanged
     {
 
         bool isChoosen;
@@ -49,11 +50,11 @@ namespace ClassLibrary
             }
         }
 
-        public Polygon()
+        public PolygonShape()
         {
         }
 
-        public Polygon(string name, List<Point> pointList, bool isChose = false)
+        public PolygonShape(string name, List<Point> pointList, bool isChose = false)
         {
             Name = name;
             IsChoosen = isChoosen;
