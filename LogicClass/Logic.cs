@@ -14,6 +14,9 @@ namespace LogicClass
 {
     public class Logic
     {
+        Point marginShape;
+        Point startMovePoint;
+
         public PolygonShape polygon { get; set; }
         public ObservableCollection<PolygonShape> polygonCollection
         {
@@ -89,6 +92,18 @@ namespace LogicClass
             {
                 item.IsChoosen = false;
             }
+        }
+
+        public void SetShapeMarginAndStartMovePoint(Point startMovePoint)
+        {
+            marginShape = polygonCollection[ChosenIndex].Margin;
+            this.startMovePoint = startMovePoint;
+        }
+
+        public void MoveShape(Point mousePoint)
+        {
+            Point newMarginPoint = new Point(mousePoint.X - startMovePoint.X + marginShape.X, mousePoint.Y - startMovePoint.Y + marginShape.Y);
+            polygonCollection[ChosenIndex].Margin = newMarginPoint;
         }
     }
 }

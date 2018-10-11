@@ -114,7 +114,27 @@ namespace Task2
             System.Windows.Controls.MenuItem menuItem = sender as System.Windows.Controls.MenuItem;
 
             logic.ChooseShape(menuItem.Header.ToString());
+            shapeCanvas.Children[logic.ChosenIndex].MouseDown += CanvasChildren_MouseDown;
         }
+
+        private void CanvasChildren_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            logic.SetShapeMarginAndStartMovePoint(Mouse.GetPosition(shapeCanvas));
+            shapeCanvas.MouseMove += CanvasContainer_MouseMove;
+        }
+
+        private void CanvasContainer_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                logic.MoveShape(Mouse.GetPosition(shapeCanvas));
+            }
+            if (e.LeftButton == MouseButtonState.Released)
+            {
+                shapeCanvas.MouseMove -= CanvasContainer_MouseMove;
+            }
+        }
+
         private void Shapes_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "IsChoosen")
@@ -126,7 +146,12 @@ namespace Task2
                 }
                 (shapeCanvas.Children[logic.ChosenIndex] as Shape).StrokeThickness = strokeThickness;
             }
-        }
+            else if (e.PropertyName == "Margin")
+            {
+                        (shapeCanvas.Children[logic.ChosenIndex] as Shape).Margin = new Thickness((sender as PolygonShape).Margin.X, (sender as PolygonShape).Margin.Y, 0, 0);
+                }
+            }
+        
         private void Shapes_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action== NotifyCollectionChangedAction.Add)
