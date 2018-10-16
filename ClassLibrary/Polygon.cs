@@ -65,8 +65,6 @@ namespace ClassLibrary
             }
         }
 
-
-
         public Color Color
         {
             get

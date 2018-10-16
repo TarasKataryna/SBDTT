@@ -54,7 +54,7 @@ namespace LogicClass
 
         public string generateName(string t)
         {
-            return t +counter++.ToString();
+            return t + counter++.ToString();
         }
 
         public List<Point> getPoints()
@@ -64,7 +64,7 @@ namespace LogicClass
 
         public void removeAllPoint()
         {
-            MyPointCollection.collection.RemoveAll(a=> a is Point);
+            MyPointCollection.collection.RemoveAll(a => a is Point);
         }
 
         public Polygon createNewPolygon()
@@ -82,8 +82,8 @@ namespace LogicClass
 
         public void UnChoseShape()
         {
-            if(ChosenIndex != -1)
-            polygonCollection[ChosenIndex].IsChoosen = false;
+            if (ChosenIndex != -1)
+                polygonCollection[ChosenIndex].IsChoosen = false;
         }
         public void ChooseShape(string str)
         {
@@ -110,5 +110,16 @@ namespace LogicClass
             Point newMarginPoint = new Point(mousePoint.X - startMovePoint.X + marginShape.X, mousePoint.Y - startMovePoint.Y + marginShape.Y);
             polygonCollection[ChosenIndex].Margin = newMarginPoint;
         }
+
+
+        public void setColor(Color color)
+        {
+            if (color != Color.FromRgb(255, 255, 255))
+            {
+                if (ChosenIndex != -1)
+                    polygonCollection[ChosenIndex].Color = color;
+            }
+        }
     }
+
 }

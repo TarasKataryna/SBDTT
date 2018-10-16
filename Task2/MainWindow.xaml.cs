@@ -18,6 +18,7 @@ using System.Windows.Controls.Primitives;
 using System.ComponentModel;
 using ClassLibrary;
 using System.Collections.Specialized;
+using System.Drawing;
 
 namespace Task2
 {
@@ -70,11 +71,14 @@ namespace Task2
         private void colorClick(object sender, RoutedEventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
-            colorDialog.ShowDialog();
-            //if(colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) // ... == DialogResult.OK)
-            //{
-            //    something.whatToColor = new SolidColorBrush(Color.FromArgb(colorDialog.Color.A, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B)
-            //}
+            if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) // ... == DialogResult.OK)
+            {
+                System.Drawing.Color color = colorDialog.Color;
+                System.Windows.Media.Color newColor = System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
+                //  something.whatToColor = new SolidColorBrush(Color.FromArgb(colorDialog.Color.A, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B)
+                logic.setColor(newColor);
+            }
+
         }
 
         public void drawPolygon()
@@ -102,7 +106,7 @@ namespace Task2
                 MyPointCollection.addPoint(Mouse.GetPosition(shapeCanvas));
                 Ellipse el = new Ellipse
                 {
-                    Fill = Brushes.Black,
+                    Fill = System.Windows.Media.Brushes.Black,
                     Height = 2,
                     Width = 2,
                     Margin = new Thickness(Mouse.GetPosition(shapeCanvas).X, Mouse.GetPosition(shapeCanvas).Y, 0, 0)
@@ -158,9 +162,10 @@ namespace Task2
                 (shapeCanvas.Children[logic.ChosenIndex] as Shape).Margin = new Thickness((sender as PolygonShape).Margin.X, (sender as PolygonShape).Margin.Y, 0, 0);
             }
             //Дописати
-            else if(e.PropertyName == "Color")
+            else if (e.PropertyName == "Color")
             {
-
+                (shapeCanvas.Children[logic.ChosenIndex]as Shape).Stroke = new SolidColorBrush((sender as PolygonShape).Color);
+                (shapeCanvas.Children[logic.ChosenIndex] as Shape).Fill = new SolidColorBrush((sender as PolygonShape).Color);
             }
         }
 
@@ -169,5 +174,7 @@ namespace Task2
             if (e.Action == NotifyCollectionChangedAction.Add)
                 (e.NewItems[0] as INotifyPropertyChanged).PropertyChanged += Shapes_PropertyChanged;
         }
+
+
     }
 }
