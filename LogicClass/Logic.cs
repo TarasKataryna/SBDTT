@@ -80,6 +80,11 @@ namespace LogicClass
             return p;
         }
 
+        public void UnChoseShape()
+        {
+            if(ChosenIndex != -1)
+            polygonCollection[ChosenIndex].IsChoosen = false;
+        }
         public void ChooseShape(string str)
         {
             ClearChoose();

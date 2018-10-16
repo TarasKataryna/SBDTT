@@ -28,12 +28,14 @@ namespace Task2
     {
         public Logic logic;
         public bool isDone;
+        public bool shapeIsChosen;
         public MainWindow()
         {
-            
+
             InitializeComponent();
             logic = new Logic();
             isDone = false;
+            shapeIsChosen = false;
             CommandBindings.Add(new CommandBinding(ApplicationCommands.New, MenuItem_Click));
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Open, MenuItem_Click_1));
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Save, MenuItem_Click_2));
@@ -41,6 +43,7 @@ namespace Task2
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, closeClick));
             ShapesListMenu.ItemsSource = logic.polygonCollection;
             ContextMenuItems.ItemsSource = logic.polygonCollection;
+
             logic.polygonCollection.CollectionChanged += Shapes_CollectionChanged;
         }
 
@@ -73,6 +76,7 @@ namespace Task2
             //    something.whatToColor = new SolidColorBrush(Color.FromArgb(colorDialog.Color.A, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B)
             //}
         }
+
         public void drawPolygon()
         {
             foreach (var item in PointEllipseColl.collection)
@@ -80,9 +84,11 @@ namespace Task2
             shapeCanvas.Children.Add(logic.createNewPolygon());
             PointEllipseColl.collection.RemoveAll(a => a is Ellipse);
         }
+
         private void Polygon_click(object sender, RoutedEventArgs e)
         {
             isDone = true;
+            logic.UnChoseShape();
         }
         private void closeClick(object sender, RoutedEventArgs e)
         {
@@ -115,6 +121,7 @@ namespace Task2
 
             logic.ChooseShape(menuItem.Header.ToString());
             shapeCanvas.Children[logic.ChosenIndex].MouseDown += CanvasChildren_MouseDown;
+            isDone = false;
         }
 
         private void CanvasChildren_MouseDown(object sender, MouseButtonEventArgs e)
@@ -148,14 +155,19 @@ namespace Task2
             }
             else if (e.PropertyName == "Margin")
             {
-                        (shapeCanvas.Children[logic.ChosenIndex] as Shape).Margin = new Thickness((sender as PolygonShape).Margin.X, (sender as PolygonShape).Margin.Y, 0, 0);
-                }
+                (shapeCanvas.Children[logic.ChosenIndex] as Shape).Margin = new Thickness((sender as PolygonShape).Margin.X, (sender as PolygonShape).Margin.Y, 0, 0);
             }
-        
+            //Дописати
+            else if(e.PropertyName == "Color")
+            {
+
+            }
+        }
+
         private void Shapes_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action== NotifyCollectionChangedAction.Add)
-                    (e.NewItems[0] as INotifyPropertyChanged).PropertyChanged += Shapes_PropertyChanged;
+            if (e.Action == NotifyCollectionChangedAction.Add)
+                (e.NewItems[0] as INotifyPropertyChanged).PropertyChanged += Shapes_PropertyChanged;
         }
     }
 }
