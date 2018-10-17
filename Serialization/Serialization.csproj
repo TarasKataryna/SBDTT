@@ -44,5 +44,19 @@
     <Compile Include="Serialization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj">
+      <Project>{0fe9c0b3-73b5-49d3-be74-1ca5287dac4a}</Project>
+      <Name>ClassLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogicClass\LogicClass.csproj">
+      <Project>{a0bfe995-8c2d-473c-8d94-f9f0eae0068a}</Project>
+      <Name>LogicClass</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Task2\Task2.csproj">
+      <Project>{0a7c6bae-25ad-4bb7-9541-cf8b4687e2e7}</Project>
+      <Name>Task2</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

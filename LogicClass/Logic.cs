@@ -84,6 +84,7 @@ namespace LogicClass
         {
             if (ChosenIndex != -1)
                 polygonCollection[ChosenIndex].IsChoosen = false;
+            
         }
         public void ChooseShape(string str)
         {
