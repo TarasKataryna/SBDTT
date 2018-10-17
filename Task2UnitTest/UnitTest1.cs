@@ -12,6 +12,9 @@ using System.IO;
 
 namespace Task2UnitTest
 {
+    /// <summary>
+    /// UnitTest class
+    /// </summary>
     [TestClass]
     public class UnitTest1
     {
@@ -24,16 +27,22 @@ namespace Task2UnitTest
 
             serial = new Serialization.Serialization();
         }
+        /// <summary>
+        /// SetColor test
+        /// </summary>
         [TestMethod]
         public void SetColorTest()
         {
             logic = new Logic();
             logic.setColor(Colors.Blue);
         }
+        /// <summary>
+        /// CreateNewPolygonWith3Points test
+        /// </summary>
         [TestMethod]
         public void CreateNewPolygonWith3PointsTest()
         {
-            
+
             logic = new Logic();
             logic.polygon.PointList = new System.Collections.Generic.List<Point>();
             logic.polygon.PointList.Add(new Point(5, -5));
@@ -43,10 +52,13 @@ namespace Task2UnitTest
 
             Assert.AreEqual(p.Points[0].X, 5);
         }
+        /// <summary>
+        /// ChoosePolygon test
+        /// </summary>
         [TestMethod]
         public void ChoosePolygonTest1()
         {
-            
+
             PolygonShape shape = new PolygonShape("Hello", new System.Collections.Generic.List<Point>() { new Point(5, -5), new Point(10, -10), new Point(20, -20) });
             PolygonShape shape1 = new PolygonShape("Pryvit", new System.Collections.Generic.List<Point>() { new Point(5, -5), new Point(10, -10), new Point(20, -20) });
             logic = new Logic();
@@ -57,6 +69,9 @@ namespace Task2UnitTest
 
             Assert.AreEqual(0, logic.ChosenIndex);
         }
+        /// <summary>
+        /// ChoosePolygon test
+        /// </summary>
         [TestMethod]
         public void ChoosePolygonTest2()
         {
@@ -70,6 +85,9 @@ namespace Task2UnitTest
 
             Assert.AreEqual(true, logic.polygonCollection[logic.ChosenIndex].IsChoosen);
         }
+        /// <summary>
+        /// ChoosePolygon test
+        /// </summary>
         [TestMethod]
         public void ChoosePolygonTest3()
         {
@@ -82,6 +100,9 @@ namespace Task2UnitTest
             logic.ChooseShape("Pryvit");
             Assert.AreEqual(false, logic.polygonCollection[0].IsChoosen);
         }
+        /// <summary>
+        /// UnChooseShape test
+        /// </summary>
         [TestMethod]
         public void UnChooseShapeTest()
         {
@@ -96,6 +117,9 @@ namespace Task2UnitTest
 
             Assert.AreEqual(false, logic.polygonCollection[logic.ChosenIndex].IsChoosen);
         }
+        /// <summary>
+        /// ClearChoose test
+        /// </summary>
         [TestMethod]
         public void ClearChooseTest()
         {
@@ -109,8 +133,11 @@ namespace Task2UnitTest
             logic.ChooseShape("Pryvit");
             logic.ClearChoose();
 
-            Assert.AreEqual(false, logic.polygonCollection[logic.ChosenIndex].IsChoosen|| logic.polygonCollection[0].IsChoosen);
+            Assert.AreEqual(false, logic.polygonCollection[logic.ChosenIndex].IsChoosen || logic.polygonCollection[0].IsChoosen);
         }
+        /// <summary>
+        /// GetPoints test
+        /// </summary>
         [TestMethod]
         public void GetPointsTest()
         {
@@ -120,10 +147,13 @@ namespace Task2UnitTest
             MyPointCollection.addPoint(new Point(11, -52));
             MyPointCollection.addPoint(new Point(53, -25));
             MyPointCollection.addPoint(new Point(15, -33));
-            System.Collections.Generic.List<Point> list =  logic.getPoints();
+            System.Collections.Generic.List<Point> list = logic.getPoints();
 
             Assert.AreEqual(5, list.Count);
         }
+        /// <summary>
+        /// RemoveAllPoints test
+        /// </summary>
         [TestMethod]
         public void RemoveAllPointsTest()
         {
@@ -137,6 +167,9 @@ namespace Task2UnitTest
             System.Collections.Generic.List<Point> list = logic.getPoints();
             Assert.AreEqual(0, list.Count);
         }
+        /// <summary>
+        /// Serialize test
+        /// </summary>
         [TestMethod]
         public void SerializeTest()
         {
@@ -148,15 +181,21 @@ namespace Task2UnitTest
             list.Add(poly);
             serial.saveShapes(@"forserialization.txt", list);
 
-            Assert.AreEqual(true,File.Exists(@"forserialization.txt"));
+            Assert.AreEqual(true, File.Exists(@"forserialization.txt"));
         }
+        /// <summary>
+        /// Deserialize test
+        /// </summary>
         [TestMethod]
         public void DeserializeTest()
         {
             ObservableCollection<PolygonShape> poly = serial.openShapes(@"forserialization.txt");
 
-            Assert.AreEqual(10,poly[0].PointList[0].X);
+            Assert.AreEqual(10, poly[0].PointList[0].X);
         }
+        /// <summary>
+        /// GenerateName test
+        /// </summary>
         [TestMethod]
         public void TestGenerateName()
         {
@@ -165,6 +204,9 @@ namespace Task2UnitTest
 
             Assert.AreEqual("Polygon1", name);
         }
+        /// <summary>
+        /// SetShapeMarginAndStartMovePoint test
+        /// </summary>
         [TestMethod]
         public void SetShapeMarginAndStartMovePointTest()
         {
@@ -181,6 +223,9 @@ namespace Task2UnitTest
 
             Assert.AreEqual(shape.Margin.X, logic.marginShape.X);
         }
+        /// <summary>
+        /// Move shape test
+        /// </summary>
         [TestMethod]
         public void MoveShapeTest()
         {
