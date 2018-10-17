@@ -65,7 +65,21 @@ namespace Task2
 
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
 
+            //SaveFileDialog saveFileDialog = new SaveFileDialog
+            //{
+            dlg.FileName = "Untitled";
+            dlg.DefaultExt = ".xaml";
+            dlg.Filter = "Xmal documents (.xaml)|*.xaml";
+            //};
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                logic.saveShapes(dlg.FileName);
+            }
         }
 
         private void colorClick(object sender, RoutedEventArgs e)

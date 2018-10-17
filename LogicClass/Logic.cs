@@ -9,6 +9,8 @@ using System.Windows.Media;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using ClassLibrary;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace LogicClass
 {
@@ -119,6 +121,15 @@ namespace LogicClass
             {
                 if (ChosenIndex != -1)
                     polygonCollection[ChosenIndex].Color = color;
+            }
+        }
+
+        public void saveShapes(string path/*, ObservableCollection<PolygonShape> polygonShapes*/)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(polygonCollection.GetType(), new Type[] { typeof(PolygonShape) });
+            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                xmlSerializer.Serialize(fs, polygonCollection);
             }
         }
 
