@@ -6,6 +6,9 @@ using Serialization;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 
 namespace Task2UnitTest
 {
@@ -133,6 +136,71 @@ namespace Task2UnitTest
             logic.removeAllPoint();
             System.Collections.Generic.List<Point> list = logic.getPoints();
             Assert.AreEqual(0, list.Count);
+        }
+        [TestMethod]
+        public void SerializeTest()
+        {
+            Polygons = new PolygonShape("Zdorov", new List<Point>() { new Point(10, 20), new Point(5, -5), new Point(101, 401) }, true);
+            ObservableCollection<PolygonShape> list = new ObservableCollection<PolygonShape>();
+            list.Add(Polygons);
+            PolygonShape poly = new PolygonShape("Abaldet", new List<Point>() { new Point(10, 201), new Point(5, -25), new Point(101, 421) });
+
+            list.Add(poly);
+            serial.saveShapes(@"forserialization.txt", list);
+
+            Assert.AreEqual(true,File.Exists(@"forserialization.txt"));
+        }
+        [TestMethod]
+        public void DeserializeTest()
+        {
+            ObservableCollection<PolygonShape> poly = serial.openShapes(@"forserialization.txt");
+
+            Assert.AreEqual(10,poly[0].PointList[0].X);
+        }
+        [TestMethod]
+        public void TestGenerateName()
+        {
+            logic = new Logic();
+            string name = logic.generateName("Polygon");
+
+            Assert.AreEqual("Polygon1", name);
+        }
+        [TestMethod]
+        public void SetShapeMarginAndStartMovePointTest()
+        {
+            logic = new Logic();
+            PolygonShape shape = new PolygonShape("Hello", new System.Collections.Generic.List<Point>() { new Point(5, -5), new Point(10, -10), new Point(20, -20) });
+            shape.Margin = new Point(1, 2);
+            PolygonShape shape1 = new PolygonShape("Pryvit", new System.Collections.Generic.List<Point>() { new Point(5, -5), new Point(10, -10), new Point(20, -20) });
+            logic.polygonCollection.Add(shape);
+            logic.polygonCollection.Add(shape1);
+
+            logic.ChooseShape("Hello");
+            Point p = new Point(5, -5);
+            logic.SetShapeMarginAndStartMovePoint(p);
+
+            Assert.AreEqual(shape.Margin.X, logic.marginShape.X);
+        }
+        [TestMethod]
+        public void MoveShapeTest()
+        {
+            logic = new Logic();
+            PolygonShape shape = new PolygonShape("Hello", new System.Collections.Generic.List<Point>() { new Point(5, -5), new Point(10, -10), new Point(20, -20) });
+            shape.Margin = new Point(1, 2);
+            PolygonShape shape1 = new PolygonShape("Pryvit", new System.Collections.Generic.List<Point>() { new Point(5, -5), new Point(10, -10), new Point(20, -20) });
+            logic.polygonCollection.Add(shape);
+            logic.polygonCollection.Add(shape1);
+
+            logic.ChooseShape("Hello");
+            Point p = new Point(5, -5);
+            logic.SetShapeMarginAndStartMovePoint(p);
+
+            Point mousePoint = new Point(300, 500);
+
+            logic.MoveShape(mousePoint);
+            Point newMargin = new Point(296, 0);
+
+            Assert.AreEqual(newMargin.X, logic.polygonCollection[logic.ChosenIndex].Margin.X);
         }
     }
 }

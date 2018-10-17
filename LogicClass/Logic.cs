@@ -14,7 +14,7 @@ namespace LogicClass
 {
     public class Logic
     {
-        Point marginShape;
+        public Point marginShape;
         Point startMovePoint;
 
         public PolygonShape polygon { get; set; }
@@ -121,6 +121,7 @@ namespace LogicClass
                     polygonCollection[ChosenIndex].Color = color;
             }
         }
+
     }
 
 }
