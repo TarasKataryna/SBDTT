@@ -8,6 +8,9 @@ using System.Windows.Media;
 
 namespace LogicClass
 {
+    /// <summary>
+    /// Collection of points
+    /// </summary>
     public static class MyPointCollection
     {
         public static List<Point> collection;

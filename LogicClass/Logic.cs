@@ -9,9 +9,14 @@ using System.Windows.Media;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using ClassLibrary;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace LogicClass
 {
+    /// <summary>
+    /// Class contains methods to create and manipulate a shape, logic
+    /// </summary>
     public class Logic
     {
         public Point marginShape;
@@ -38,7 +43,10 @@ namespace LogicClass
         }
 
 
-
+        /// <summary>
+        /// Creates a Polygon
+        /// </summary>
+        /// <param name="act"></param>
         public void createAndDrawPolygon(Action act)
         {
             List<Point> points = getPoints();
@@ -51,7 +59,11 @@ namespace LogicClass
                 removeAllPoint();
             }
         }
-
+        /// <summary>
+        /// Names the shape
+        /// </summary>
+        /// <param name="t">Name</param>
+        /// <returns>Name + count</returns>
         public string generateName(string t)
         {
             return t + counter++.ToString();
@@ -79,19 +91,28 @@ namespace LogicClass
             p.Margin = new Thickness(polygon.Margin.X, polygon.Margin.Y, 0, 0);
             return p;
         }
-
+        /// <summary>
+        /// Unchoose shape
+        /// </summary>
         public void UnChoseShape()
         {
             if (ChosenIndex != -1)
                 polygonCollection[ChosenIndex].IsChoosen = false;
             
         }
+        /// <summary>
+        /// Choose shape
+        /// </summary>
+        /// <param name="str">Shape name</param>
         public void ChooseShape(string str)
         {
             ClearChoose();
             ChosenIndex = polygonCollection.IndexOf(polygonCollection.Where(a => a.Name == str).First());
             polygonCollection[ChosenIndex].IsChoosen = true;
         }
+        /// <summary>
+        /// Unchoose everything
+        /// </summary>
         public void ClearChoose()
         {
             foreach (var item in polygonCollection)
@@ -99,26 +120,44 @@ namespace LogicClass
                 item.IsChoosen = false;
             }
         }
-
+        /// <summary>
+        /// Set margin and start point
+        /// </summary>
+        /// <param name="startMovePoint"></param>
         public void SetShapeMarginAndStartMovePoint(Point startMovePoint)
         {
             marginShape = polygonCollection[ChosenIndex].Margin;
             this.startMovePoint = startMovePoint;
         }
-
+        /// <summary>
+        /// Move shape
+        /// </summary>
+        /// <param name="mousePoint">Mouse point</param>
         public void MoveShape(Point mousePoint)
         {
             Point newMarginPoint = new Point(mousePoint.X - startMovePoint.X + marginShape.X, mousePoint.Y - startMovePoint.Y + marginShape.Y);
             polygonCollection[ChosenIndex].Margin = newMarginPoint;
         }
 
-
+        /// <summary>
+        /// Choose color
+        /// </summary>
+        /// <param name="color">Color</param>   
         public void setColor(Color color)
         {
             if (color != Color.FromRgb(255, 255, 255))
             {
                 if (ChosenIndex != -1)
                     polygonCollection[ChosenIndex].Color = color;
+            }
+        }
+
+        public void saveShapes(string path/*, ObservableCollection<PolygonShape> polygonShapes*/)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(polygonCollection.GetType(), new Type[] { typeof(PolygonShape) });
+            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                xmlSerializer.Serialize(fs, polygonCollection);
             }
         }
 

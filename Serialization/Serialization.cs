@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using LogicClass;
 using ClassLibrary;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
@@ -13,8 +12,16 @@ using System.IO;
 
 namespace Serialization
 {
+    /// <summary>
+    /// Xml serialization class
+    /// </summary>
     public class Serialization
     {
+        /// <summary>
+        /// Save shape
+        /// </summary>
+        /// <param name="path">Path to the file</param>
+        /// <param name="polygonShapes">Shape</param>
         public void saveShapes(string path,ObservableCollection<PolygonShape> polygonShapes)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(polygonShapes.GetType(),new Type[] { typeof(PolygonShape)});
@@ -23,6 +30,11 @@ namespace Serialization
                 xmlSerializer.Serialize(fs, polygonShapes);
             }
         }
+        /// <summary>
+        /// Open shape
+        /// </summary>
+        /// <param name="path">Path to the file</param>
+        /// <returns>Shape</returns>
         public ObservableCollection<PolygonShape> openShapes(string path)
         {
             ObservableCollection<PolygonShape> polygons = new ObservableCollection<PolygonShape>();

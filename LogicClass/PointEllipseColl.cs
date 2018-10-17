@@ -9,6 +9,9 @@ using System.Windows.Shapes;
 
 namespace LogicClass
 {
+    /// <summary>
+    /// Collection of points
+    /// </summary>
     public static class PointEllipseColl
     {
         public static List<Ellipse> collection;

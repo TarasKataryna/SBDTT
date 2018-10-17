@@ -8,9 +8,12 @@ using System.Collections.Generic;
 
 namespace ClassLibrary
 {
+
     public class PolygonShape : INotifyPropertyChanged
     {
-
+        /// <summary>
+        /// Class for polygon shape
+        /// </summary>
         bool isChoosen;
         Color color = Color.FromArgb(0, 255, 255, 255);
         Point margin;

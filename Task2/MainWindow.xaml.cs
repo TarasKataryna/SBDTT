@@ -62,12 +62,34 @@ namespace Task2
         {
 
         }
-
+        /// <summary>
+        /// Save
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
 
+            //SaveFileDialog saveFileDialog = new SaveFileDialog
+            //{
+            dlg.FileName = "Untitled";
+            dlg.DefaultExt = ".xaml";
+            dlg.Filter = "Xmal documents (.xaml)|*.xaml";
+            //};
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                logic.saveShapes(dlg.FileName);
+            }
         }
-
+        /// <summary>
+        /// Color dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void colorClick(object sender, RoutedEventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
@@ -80,7 +102,9 @@ namespace Task2
             }
 
         }
-
+        /// <summary>
+        /// Draws polygon
+        /// </summary>
         public void drawPolygon()
         {
             foreach (var item in PointEllipseColl.collection)
@@ -88,17 +112,30 @@ namespace Task2
             shapeCanvas.Children.Add(logic.createNewPolygon());
             PointEllipseColl.collection.RemoveAll(a => a is Ellipse);
         }
-
+        /// <summary>
+        /// Choose polygon
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Polygon_click(object sender, RoutedEventArgs e)
         {
             isDone = true;
             logic.UnChoseShape();
         }
+        /// <summary>
+        /// Close
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void closeClick(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
+        /// <summary>
+        /// Point drawing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">Mouse</param>
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (isDone && e.LeftButton == MouseButtonState.Pressed)
@@ -119,6 +156,11 @@ namespace Task2
             }
 
         }
+        /// <summary>
+        /// Canvas context menu click choose shape
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItem_Shapes_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Controls.MenuItem menuItem = sender as System.Windows.Controls.MenuItem;
@@ -133,7 +175,6 @@ namespace Task2
             logic.SetShapeMarginAndStartMovePoint(Mouse.GetPosition(shapeCanvas));
             shapeCanvas.MouseMove += CanvasContainer_MouseMove;
         }
-
         private void CanvasContainer_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -145,7 +186,11 @@ namespace Task2
                 shapeCanvas.MouseMove -= CanvasContainer_MouseMove;
             }
         }
-
+        /// <summary>
+        /// Changed property
+        /// </summary>
+        /// <param name="sender"> Polygon shape</param>
+        /// <param name="e"></param>
         private void Shapes_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "IsChoosen")
@@ -168,7 +213,11 @@ namespace Task2
                 (shapeCanvas.Children[logic.ChosenIndex] as Shape).Fill = new SolidColorBrush((sender as PolygonShape).Color);
             }
         }
-
+        /// <summary>
+        /// Changes shapes collection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Shapes_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
